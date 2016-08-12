@@ -2,18 +2,56 @@
 
 var TSPSConnection;
 
-var coolDiv;
-var coolDivs = {};
-var peopleCount = 0;
+var peopleArray = [];
 var socket = io('ws://192.168.1.124:4000');
+
+function setup() {
+    createCanvas(windowWidth, windowHeight);
+    textAlign(LEFT, BOTTOM);
+    fill(255);
+    stroke('#3c3');
+}
+
+function draw() {
+    clear();
+
+    text(frameCount, 8, height - 8);
+
+    peopleArray.forEach(function(person, index) {
+        ellipse(
+            map(person.centroid.x, 0, 1, 0, width),
+            map(person.boundingrect.y + person.boundingrect.height, 0, 2, 0, height),
+            person.boundingrect.width * 32,
+            person.boundingrect.height * 32
+        );
+        text(
+            index,
+            map(person.centroid.x, 0, 1, 0, width),
+            map(person.boundingrect.y + person.boundingrect.height, 0, 2, 0, height)
+        );
+    });
+
+    beginShape();
+    peopleArray.forEach(function(person) {
+        vertex(
+            map(person.centroid.x, 0, 1, 0, width),
+            map(person.boundingrect.y + person.boundingrect.height, 0, 2, 0, height)
+        );
+    });
+    endShape(CLOSE);
+
+}
 
 $(document).ready(function () {
 
-    coolDiv = $("#coolDiv");
-    coolDiv.remove(); //we're just going to use our cool div as a template
+    console.log('ready');
+
+    // coolDiv = $("#coolDiv");
+    // coolDiv.remove(); //we're just going to use our cool div as a template
 
     // SETUP TSPS Connection
     TSPSConnection = new TSPS.Connection('192.168.1.241', '7681');
+    // TSPSConnection = new TSPS.Connection('192.168.1.162', '7681');
 
     // IF YOU'VE CHANGED THE PORT:
     // TSPSConnection = new TSPS.Connection( "localhost", yourport )
@@ -27,37 +65,38 @@ $(document).ready(function () {
     TSPSConnection.onPersonEntered = onPersonEntered;
     TSPSConnection.onPersonMoved = onPersonMoved;
     TSPSConnection.onPersonUpdated = onPersonUpdated;
-    TSPSConnection.onPersonLeft = onPersonLeft;
+    TSPSConnection.onPersonLeft = onPersonLeave;
 });
 
-function updateDiv(div, person) {
+function updateCanvas(person) {
     console.log(person);
-    // we have to multiply by the window size here because our centroid is 0-1
-    div.css("left", Math.round(person.boundingrect.x * window.innerWidth));
-    div.css("top", Math.round(person.boundingrect.y * window.innerHeight));
-    div.css("width", Math.round(person.boundingrect.width * window.innerWidth));
-    div.css("height", Math.round(person.boundingrect.height * window.innerHeight));
 }
 
 function onPersonEntered(person) {
-    peopleCount++;
-    // clone template + add it to body
-    coolDivs[person.id] = coolDiv.clone();
-    $(document.body).append(coolDivs[person.id]);
-    updateDiv(coolDivs[person.id], person);
-    socket.emit('application.message', peopleCount);
+    person.personID = peopleArray.length + 1;
+    peopleArray.push(person);
+    console.log(peopleArray.length);
+
+    updateCanvas(person);
+    socket.emit('application.message', peopleArray.length);
 }
 
 function onPersonUpdated(person) {
-    updateDiv(coolDivs[person.id], person);
+    console.log('person updated')
+    updateCanvas(person);
 }
 
 function onPersonMoved(person) {
-    updateDiv(coolDivs[person.id], person);
+    console.log('person moved');
+    updateCanvas(person);
 }
 
-function onPersonLeft(person) {
-    peopleCount--;
-    coolDivs[person.id].remove();
-    socket.emit('application.message', peopleCount);
+function onPersonLeave(person) {
+    peopleArray = peopleArray.filter(function(obj) {
+        return obj.id !== person.id;
+    });
+    console.log(peopleArray.length);
+
+
+    socket.emit('application.message', peopleArray.length);
 }
