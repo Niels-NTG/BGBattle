@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="socket.io.min.js"></script>
+</head>
+<body>
+<script>
+    var socket = io('ws://192.168.1.124:4000');
+    socket.on('application.message', function (peopleCount) {
+        console.log(peopleCount);
+        document.writeln('<span style="color: white">' + peopleCount + '</span>');
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "version": "0.1",
+  "screens": {
+    "1": "Show People",
+    "2": "People count"
+  }
+}
