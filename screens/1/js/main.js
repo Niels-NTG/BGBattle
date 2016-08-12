@@ -69,7 +69,8 @@ $(document).ready(function () {
 });
 
 function updateCanvas(person) {
-    console.log(person);
+    // console.log(person);
+    getVertexLength();
 }
 
 function onPersonEntered(person) {
@@ -96,7 +97,19 @@ function onPersonLeave(person) {
         return obj.id !== person.id;
     });
     console.log(peopleArray.length);
-
-
     socket.emit('application.message', peopleArray.length);
+}
+
+function getVertexLength() {
+    var vertexLength = 0;
+    for (var i = 0; i < peopleArray.length - 1; i++) {
+        vertexLength += dist(
+            peopleArray[i].centroid.x,
+            peopleArray[i].boundingrect.y + peopleArray[i].boundingrect.height,
+            peopleArray[i + 1].centroid.x,
+            peopleArray[i + 1].boundingrect.y + peopleArray[i + 1].boundingrect.height
+        );
+    }
+    console.log(vertexLength);
+    return vertexLength;
 }
