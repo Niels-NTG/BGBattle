@@ -41,99 +41,135 @@ var socket = io('ws://192.168.1.124:4000');
 
 var portraitArray = [];
 
-function Portrait(image, sound) {
-    this.image = image;
+function Portrait(images, sound) {
+    this.images = images;
+    this.currentImage = this.images[0];
+    this.animationSpeed = 2;
+    this.x = 0;
+    this.y = 0;
     this.sound = sound;
-    this.x;
-    this.y;
 
     Portrait.prototype.resizeToFitImage = function(frameWidth, frameHeight) {
-        this.image.resize(frameWidth, 0);
+        this.images.forEach(function(image) {
+            image.resize(frameWidth, 0);
+            this.y += (frameHeight - image.height) / 2;
+        });
     }
 
     Portrait.prototype.setPosition = function(x, y) {
         this.x = x;
         this.y = y;
-    };
+    }
 
     Portrait.prototype.playSound = function() {
 
+    }
+
+    Portrait.prototype.playAnimation = function() {
+        if (frameCount % this.animationSpeed === 0) {
+            var currentImageIndex = this.images.indexOf(this.currentImage);
+            if (this.images[currentImageIndex + 1] !== undefined) {
+                this.currentImage = this.images[currentImageIndex + 1];
+            } else {
+                this.currentImage = this.images[0];
+            }
+        }
     }
 }
 
 // p5 preload
 function preload() {
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0019.jpg')
+        [
+            loadImage('img/portraits/0019.jpg'),
+            loadImage('img/portraits/0019_1.png'),
+            loadImage('img/portraits/0019_2.png')
+        ]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0024.jpg')
+        [loadImage('img/portraits/0024.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0025.jpg')
+        [
+            loadImage('img/portraits/0025.jpg'),
+            loadImage('img/portraits/0025_1.png'),
+            loadImage('img/portraits/0025_2.png')
+        ]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0109.jpg')
+        [loadImage('img/portraits/0109.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0110.jpg')
+        [loadImage('img/portraits/0110.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0114.jpg')
+        [
+            loadImage('img/portraits/0114.jpg'),
+            loadImage('img/portraits/0114_1.png'),
+            loadImage('img/portraits/0114_2.png')
+        ]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0115.jpg')
+        [loadImage('img/portraits/0115.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0116.jpg')
+        [loadImage('img/portraits/0116.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0129.jpg')
+        [
+            loadImage('img/portraits/0129.jpg'),
+            loadImage('img/portraits/0129_1.png'),
+            loadImage('img/portraits/0129_2.png')
+        ]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0130.jpg')
+        [loadImage('img/portraits/0130.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0133.jpg')
+        [loadImage('img/portraits/0133.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0172.jpg')
+        [loadImage('img/portraits/0172.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0270.jpg')
+        [loadImage('img/portraits/0270.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0331.jpg')
+        [loadImage('img/portraits/0331.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0514.jpg')
+        [loadImage('img/portraits/0514.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0515.jpg')
+        [loadImage('img/portraits/0515.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0698 A.jpg')
+        [loadImage('img/portraits/0698 A.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/0698 B.jpg')
+        [loadImage('img/portraits/0698 B.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/2573.jpg')
+        [loadImage('img/portraits/2573.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/2611.jpg')
+        [loadImage('img/portraits/2611.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/2622.jpg')
+        [loadImage('img/portraits/2622.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/3884.jpg')
+        [loadImage('img/portraits/3884.jpg')]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/BR1336.jpg')
+        [
+            loadImage('img/portraits/BR1336.jpg'),
+            loadImage('img/portraits/BR1336_1.png'),
+            loadImage('img/portraits/BR1336_2.png')
+        ]
     ));
     portraitArray.push(new Portrait(
-        loadImage('img/portraits/BR2100.jpg')
+        [loadImage('img/portraits/BR2100.jpg')]
     ));
 }
 
@@ -141,10 +177,13 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight);
 
+    frameRate(30);
+
+    background(0);
+
     var row = 0;
     var col = 0;
     portraitArray.forEach(function(portrait, index) {
-        portrait.resizeToFitImage(width / 8, height / 4);
         if (index % 8 === 0 && index > 0) {
             row++;
             col = 0;
@@ -153,19 +192,17 @@ function setup() {
             (width / 8) * col,
             (height / 4) * row
         );
+        portrait.resizeToFitImage(width / 8, height / 4);
         col++;
     });
-
-    textAlign(LEFT, BOTTOM);
-    fill(255);
-    stroke('#3c3');
 }
 
 // p5 draw
 function draw() {
-    // clear();
+    background(0);
     portraitArray.forEach(function(portrait) {
-        image(portrait.image, portrait.x, portrait.y);
+        image(portrait.currentImage, portrait.x, portrait.y);
+        portrait.playAnimation();
     });
 }
 
