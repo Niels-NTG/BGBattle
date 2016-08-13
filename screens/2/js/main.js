@@ -9,10 +9,10 @@ var isPaused = false;
 
 var isAtractMode = true;
 
-function Portrait(images) {
+function Portrait(images, animationDelay) {
 	this.images = images;
 	this.currentImage = this.images[0];
-	this.animationDelay = 2;
+	this.animationDelay = animationDelay || 2;
 	this.x = 0;
 	this.y = 0;
 	this.isTriggered = false;
@@ -52,17 +52,19 @@ function Portrait(images) {
 function preload() {
 	portraitArray.push(new Portrait(
 		[
-			loadImage('img/portraits/0025.png'),
+			// loadImage('img/portraits/0025.png'),
 			loadImage('img/portraits/0025_1.png'),
 			loadImage('img/portraits/0025_2.png')
-		]
+		],
+		12
 	));
 	portraitArray.push(new Portrait(
 		[
 			loadImage('img/portraits/BR1336.jpg'),
 			loadImage('img/portraits/BR1336_1.png'),
 			loadImage('img/portraits/BR1336_2.png')
-		]
+		],
+		4
 	));
 	portraitArray.push(new Portrait(
 		[
@@ -148,6 +150,16 @@ function preload() {
 			loadImage('img/02_BG_2016_white.png')
 		]
 	));
+	portraitArray.push(new Portrait(
+		[
+			loadImage('img/02_BG_2016_white.png')
+		]
+	));
+	portraitArray.push(new Portrait(
+		[
+			loadImage('img/02_BG_2016_white.png')
+		]
+	));
 }
 
 // p5 setup
@@ -190,6 +202,18 @@ function draw() {
 
 	// Branding
 	tint(frameCount % 360, 100, 100);
+	image(
+		portraitArray[portraitArray.length - 3].currentImage,
+		portraitArray[portraitArray.length - 3].x,
+		portraitArray[portraitArray.length - 3].y
+	);
+	tint((frameCount - 100) % 360, 100, 100);
+	image(
+		portraitArray[portraitArray.length - 2].currentImage,
+		portraitArray[portraitArray.length - 2].x,
+		portraitArray[portraitArray.length - 2].y
+	);
+	tint((frameCount - 200) % 360, 100, 100);
 	image(
 		portraitArray[portraitArray.length - 1].currentImage,
 		portraitArray[portraitArray.length - 1].x,
