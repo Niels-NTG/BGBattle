@@ -1,7 +1,7 @@
 {
-  "version": "0.1",
+  "version": "0.11",
   "screens": {
-    "1": "Show People",
-    "2": "People count"
+    "1": "Sequencer",
+    "2": "Faces"
   }
 }
