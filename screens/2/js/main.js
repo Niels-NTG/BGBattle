@@ -152,7 +152,7 @@ function preload() {
 
 // p5 setup
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+	createCanvas(1920, 1200);
 
 	colorMode(HSB);
 	// frameRate(30);
@@ -162,15 +162,15 @@ function setup() {
 	var row = 0;
 	var col = 0;
 	portraitArray.forEach(function(portrait, index) {
-		if (index % 3 === 0 && index > 0) {
+		if (index % 4 === 0 && index > 0) {
 			row++;
 			col = 0;
 		}
 		portrait.setPosition(
-			(width / 3) * col,
+			(width / 4) * col,
 			(height / 2) * row
 		);
-		portrait.resizeToFitImage(width / 3, height / 2);
+		portrait.resizeToFitImage(width / 4, height / 2);
 		col++;
 	});
 }
