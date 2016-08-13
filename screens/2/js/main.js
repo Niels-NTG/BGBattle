@@ -152,7 +152,7 @@ function preload() {
 
 // p5 setup
 function setup() {
-	createCanvas(1920, 1200);
+	createCanvas(windowWidth, windowHeight);
 
 	colorMode(HSB);
 	// frameRate(30);
