@@ -1,3 +1,4 @@
+var drumpreset, drumsetup, drumcomp;
 function Button() {
     this.x;
     this.y;
@@ -18,6 +19,8 @@ function Button() {
     this.hitTimer = 0;
     this.hitBuffer = 100;
     this.socket;
+    this.drumcomp;
+    
     Button.prototype.paint = function () {
         //Light up effect
         if (this.direction !== 0) {
@@ -87,8 +90,8 @@ function Button() {
                 this.play = true;
             }
             var toggleNumber = ((this.play) ? 1 : 0);
-            drumcomp.setSelectedInstrument(instrumentList[this.instrumentIndex]);
-            drumcomp.setStep(this.tickIndex, toggleNumber);
+            this.drumpcomp.setSelectedInstrument(instrumentList[this.instrumentIndex]);
+            this.drumpcomp.setStep(this.tickIndex*2, toggleNumber);
         }
     }
 }

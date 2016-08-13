@@ -4,26 +4,41 @@ var socket = io('ws://192.168.1.124:4000');
 //var socket = io('ws://192.168.1.162:3000');
 var peopleArray = [];
 //sequencer stuff
-var drumpreset, drumsetup, drumcomp;
-
 //matrix sequence settings
 var instrumentList = ["bass_drum", "o_hi_hat", "snare_drum", "hand_clap", "crash"];
 var tickAmount = 8;
 var paddingAmount = 0.01; // padding in percentages
-var buttons = new Array();
+var buttons = [];
 var buttonWidth, buttonHeight, activeHeightArea;
 //initialising the sequencer, remeber this is async, so you'll want to wait before just calling
-
 //things inside the sequencer
 var app = angular.module('9095App').directive('test', function (presetStorage, setup, sequencer) {
     return {
         link: function () {
-
             //Hier alle logica indrukken
             setup.loadSounds().then(function () {
                 drumsetup = setup;
                 drumpreset = presetStorage;
                 drumcomp = sequencer;
+                sequencer.startPlay(true);
+                buttonWidth = width / tickAmount;
+                buttonHeight = height / instrumentList.length;
+                for (var i = 0; i < instrumentList.length; i++) {
+                    buttons[i] = new Array();
+                    for (var t = 0; t < tickAmount; t++) {
+                        buttons[i][t] = new Button();
+                        buttons[i][t].instrumentIndex = i;
+                        buttons[i][t].tickIndex = t;
+                        buttons[i][t].x = (width * 0.005) + (buttonWidth * t);
+                        buttons[i][t].y = (height * 0.005) + (buttonHeight * i);
+                        buttons[i][t].width = buttonWidth - (paddingAmount * width);
+                        buttons[i][t].height = buttonHeight - (paddingAmount * height);
+                        buttons[i][t].highlightcolor = ((t % 2 == 0) ? color("#f6f7d0") : color("#f2f2eb"));
+                        buttons[i][t].lowcolor = ((t % 2 == 0) ? color("#999") : color("#666"));
+                        buttons[i][t].socket = socket;
+                        buttons[i][t].drumpcomp = drumcomp;
+                    }
+                }
                 for (var i = 0; i <= 15; i++) {
                     //Een functie voor elke tick (0-15 ticks, 4 maten)
                     $('body').scope().$on('tick_' + i, function (event, data) {
@@ -45,36 +60,16 @@ var app = angular.module('9095App').directive('test', function (presetStorage, s
 });
 
 function setup() {
-    createCanvas(1280, 720);
-    buttonWidth = width / tickAmount;
-
-    buttonHeight = height / instrumentList.length;
-    for (var i = 0; i < instrumentList.length; i++) {
-        buttons[i] = new Array();
-        for (var t = 0; t < tickAmount; t++) {
-            buttons[i][t] = new Button();
-            buttons[i][t].instrumentIndex = i;
-            buttons[i][t].tickIndex = t;
-            buttons[i][t].x = (width*0.005)+(buttonWidth * t);
-            buttons[i][t].y = (height*0.005)+(buttonHeight * i);
-            buttons[i][t].width = buttonWidth - (paddingAmount * width);
-            buttons[i][t].height = buttonHeight - (paddingAmount * height);
-            buttons[i][t].highlightcolor = ((t % 2 == 0) ? color("#f6f7d0") : color("#f2f2eb"));
-            buttons[i][t].lowcolor = ((t % 2 == 0) ? color("#999") : color("#666"));
-            buttons[i][t].socket = socket;
-        }
-    }
-
+    createCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
-        clear();
+    clear();
     buttons.forEach(function (instrument, index) {
         instrument.forEach(function (tick, index) {
             tick.paint();
         })
     })
-
     peopleArray.forEach(function (person, index) {
         ellipse(map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0), person.boundingrect.width * 32, person.boundingrect.height * 32);
         text(index, map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0));
@@ -97,9 +92,6 @@ $(document).ready(function () {
     TSPSConnection.onPersonMoved = onPersonMoved;
     TSPSConnection.onPersonUpdated = onPersonUpdated;
     TSPSConnection.onPersonLeft = onPersonLeave;
-    $("body").click(function (e) {
-        drumcomp.startPlay(true);
-    })
 });
 
 function updateCanvas(person) {
@@ -116,9 +108,9 @@ function onPersonEntered(person) {
 }
 
 function onPersonUpdated(person) {
-    var xButton = Math.floor(map(person.centroid.x, 0, 1, 0, width) / buttonWidth);
-    var yButton = Math.floor(map(person.boundingrect.y + person.boundingrect.height, 0, 1, 0, height) / buttonHeight);
-    console.log(xButton, yButton);
+    var xButton = Math.floor(map(person.centroid.x, 0, 1, width, 0) / buttonWidth);
+    var yButton = Math.floor(map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0) / buttonHeight);
+    //    console.log(xButton, yButton);
     if (xButton < tickAmount && yButton < instrumentList.length) {
         buttons[yButton][xButton].hitBtn();
     }
