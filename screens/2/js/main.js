@@ -50,10 +50,10 @@ function Portrait(images, sound) {
     this.sound = sound;
 
     Portrait.prototype.resizeToFitImage = function(frameWidth, frameHeight) {
-        this.images.forEach(function(image) {
-            image.resize(frameWidth, 0);
+	    this.images.forEach(function(image) {
+	        image.resize(frameWidth, 0);
             this.y += (frameHeight - image.height);
-        });
+	    });
     }
 
     Portrait.prototype.setPosition = function(x, y) {
@@ -171,6 +171,11 @@ function preload() {
     // portraitArray.push(new Portrait(
     //     [loadImage('img/portraits/BR2100.jpg')]
     // ));
+    portraitArray.push(new Portrait(
+        [
+            loadImage('img/01_BG_2016_white.png')
+        ]
+    ));
 }
 
 // p5 setup
