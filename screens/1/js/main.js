@@ -22,7 +22,7 @@ var app = angular.module('9095App').directive('test', function(presetStorage, se
 
         function testGlobal(){
             for(var i =0;i<=15;i++){
-             
+            $.noConflict();
                 //Een functie voor elke tick (0-15 ticks, 4 maten)
             $('body').scope().$on('tick_'+i, function(event, data){console.log(event)});
             
@@ -114,19 +114,19 @@ function updateCanvas(person) {
 function onPersonEntered(person) {
     person.personID = peopleArray.length + 1;
     peopleArray.push(person);
-    console.log(peopleArray.length);
+//    console.log(peopleArray.length);
 
     updateCanvas(person);
     socket.emit('application.message', peopleArray.length);
 }
 
 function onPersonUpdated(person) {
-    console.log('person updated')
+//    console.log('person updated')
     updateCanvas(person);
 }
 
 function onPersonMoved(person) {
-    console.log('person moved');
+//    console.log('person moved');
     updateCanvas(person);
 }
 
@@ -134,7 +134,7 @@ function onPersonLeave(person) {
     peopleArray = peopleArray.filter(function(obj) {
         return obj.id !== person.id;
     });
-    console.log(peopleArray.length);
+//    console.log(peopleArray.length);
     socket.emit('application.message', peopleArray.length);
 }
 
@@ -148,6 +148,6 @@ function getVertexLength() {
             peopleArray[i + 1].boundingrect.y + peopleArray[i + 1].boundingrect.height
         );
     }
-    console.log(vertexLength);
+//    console.log(vertexLength);
     return vertexLength;
 }
