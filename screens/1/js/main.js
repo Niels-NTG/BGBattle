@@ -5,13 +5,15 @@ var socket = io('ws://192.168.1.124:4000');
 var peopleArray = [];
 //sequencer stuff
 var drumpreset, drumsetup, drumcomp;
+
 //matrix sequence settings
 var instrumentList = ["bass_drum", "o_hi_hat", "snare_drum", "hand_clap", "crash"];
 var tickAmount = 8;
 var paddingAmount = 0.01; // padding in percentages
 var buttons = new Array();
 var buttonWidth, buttonHeight, activeHeightArea;
-//initialising the sequencer, remeber this is async, so you'll want to wait before just calling 
+//initialising the sequencer, remeber this is async, so you'll want to wait before just calling
+
 //things inside the sequencer
 var app = angular.module('9095App').directive('test', function (presetStorage, setup, sequencer) {
     return {
@@ -45,7 +47,7 @@ var app = angular.module('9095App').directive('test', function (presetStorage, s
 function setup() {
     createCanvas(1280, 720);
     buttonWidth = width / tickAmount;
-    
+
     buttonHeight = height / instrumentList.length;
     for (var i = 0; i < instrumentList.length; i++) {
         buttons[i] = new Array();
@@ -72,11 +74,16 @@ function draw() {
             tick.paint();
         })
     })
-    
+
     peopleArray.forEach(function (person, index) {
-        ellipse(map(person.centroid.x, 0, 1, 0, width), map(person.boundingrect.y + person.boundingrect.height, 0, 2, 0, height), person.boundingrect.width * 32, person.boundingrect.height * 32);
-        text(index, map(person.centroid.x, 0, 1, 0, width), map(person.boundingrect.y + person.boundingrect.height, 0, 2, 0, height));
+        ellipse(map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0), person.boundingrect.width * 32, person.boundingrect.height * 32);
+        text(index, map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0));
     });
+    beginShape();
+    peopleArray.forEach(function (person) {
+        vertex(map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0));
+    });
+    endShape(CLOSE);
 }
 $(document).ready(function () {
     // SETUP TSPS Connection
