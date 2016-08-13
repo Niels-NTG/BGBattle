@@ -5,6 +5,10 @@ var socket = io('ws://192.168.1.124:4000');
 
 var portraitArray = [];
 
+var isPaused = false;
+
+var isAtractMode = true;
+
 function Portrait(images, sound) {
     this.images = images;
     this.currentImage = this.images[0];
@@ -25,20 +29,21 @@ function Portrait(images, sound) {
         this.y = y;
     }
 
-    Portrait.prototype.playSound = function() {
-
-    }
-
     Portrait.prototype.playAnimation = function() {
         if (frameCount % this.animationDelay === 0) {
             var currentImageIndex = this.images.indexOf(this.currentImage);
             if (this.images[currentImageIndex + 1] !== undefined) {
                 this.currentImage = this.images[currentImageIndex + 1];
             } else {
-                this.currentImage = this.images[0];
+                this.resetAnimation();
             }
         }
     }
+
+    Portrait.prototype.resetAnimation = function() {
+    	this.currentImage = this.images[0];
+    }
+
 }
 
 // p5 preload
@@ -146,6 +151,7 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight);
 
+    colorMode(HSB);
     frameRate(30);
 
     background(0);
@@ -169,10 +175,30 @@ function setup() {
 // p5 draw
 function draw() {
     background(0);
+    noTint();
     portraitArray.forEach(function(portrait) {
         image(portrait.currentImage, portrait.x, portrait.y);
         portrait.playAnimation();
     });
+
+    tint(frameCount % 360, 100, 100);
+    image(portraitArray[portraitArray.length - 1].currentImage, portraitArray[portraitArray.length - 1].x, portraitArray[portraitArray.length - 1].y);
+
+    if (isAtractMode) {
+
+    }
+
+}
+
+function keyPressed() {
+	if (key === 'p' || key === 'P') {
+		isPaused = !isPaused;
+	}
+	if (isPaused) {
+		noLoop();
+	} else {
+		loop();
+	}
 }
 
 $(document).ready(function () {
