@@ -71,7 +71,7 @@ function Button() {
         //FIXME: match animation speed to Tempo
         this.aniMationDuration = ((drumcomp.getTempo() / 60) / 4) * frameRate();
         if(this.play){
-            this.socket.emit('application.instrument', this.instrumentIndex);
+            this.socket.emit('application.message', this.instrumentIndex);
         }
     }
 //    Button.prototype.toggle = function (state) {

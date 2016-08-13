@@ -104,7 +104,7 @@ function onPersonEntered(person) {
     peopleArray.push(person);
     //    console.log(peopleArray.length);
     updateCanvas(person);
-    socket.emit('application.message', peopleArray.length);
+    
 }
 
 function onPersonUpdated(person) {
@@ -126,7 +126,7 @@ function onPersonLeave(person) {
         return obj.id !== person.id;
     });
     //    console.log(peopleArray.length);
-    socket.emit('application.message', peopleArray.length);
+    
 }
 
 function getVertexLength() {

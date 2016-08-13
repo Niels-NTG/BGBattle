@@ -231,7 +231,7 @@ $(document).ready(function () {
 	// TSPSConnection.onPersonLeft = onPersonLeave;
 });
 
-socket.on('application.instrument', function(instrumentIndex) {
+socket.on('application.message', function(instrumentIndex) {
 	// console.log(instrumentIndex);
 	portraitArray[instrumentIndex].playAnimation();
 });
