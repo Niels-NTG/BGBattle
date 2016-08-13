@@ -44,7 +44,7 @@ var portraitArray = [];
 function Portrait(images, sound) {
     this.images = images;
     this.currentImage = this.images[0];
-    this.animationSpeed = 2;
+    this.animationDelay = 2;
     this.x = 0;
     this.y = 0;
     this.sound = sound;
@@ -52,7 +52,7 @@ function Portrait(images, sound) {
     Portrait.prototype.resizeToFitImage = function(frameWidth, frameHeight) {
         this.images.forEach(function(image) {
             image.resize(frameWidth, 0);
-            this.y += (frameHeight - image.height) / 2;
+            this.y += (frameHeight - image.height);
         });
     }
 
@@ -66,7 +66,7 @@ function Portrait(images, sound) {
     }
 
     Portrait.prototype.playAnimation = function() {
-        if (frameCount % this.animationSpeed === 0) {
+        if (frameCount % this.animationDelay === 0) {
             var currentImageIndex = this.images.indexOf(this.currentImage);
             if (this.images[currentImageIndex + 1] !== undefined) {
                 this.currentImage = this.images[currentImageIndex + 1];
@@ -86,35 +86,35 @@ function preload() {
             loadImage('img/portraits/0019_2.png')
         ]
     ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0024.jpg')]
-    ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0024.jpg')]
+    // ));
     portraitArray.push(new Portrait(
         [
-            loadImage('img/portraits/0025.jpg'),
+            loadImage('img/portraits/0025.png'),
             loadImage('img/portraits/0025_1.png'),
             loadImage('img/portraits/0025_2.png')
         ]
     ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0109.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0110.jpg')]
-    ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0109.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0110.jpg')]
+    // ));
     portraitArray.push(new Portrait(
         [
-            loadImage('img/portraits/0114.jpg'),
+            loadImage('img/portraits/0114.png'),
             loadImage('img/portraits/0114_1.png'),
             loadImage('img/portraits/0114_2.png')
         ]
     ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0115.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0116.jpg')]
-    ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0115.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0116.jpg')]
+    // ));
     portraitArray.push(new Portrait(
         [
             loadImage('img/portraits/0129.jpg'),
@@ -122,45 +122,45 @@ function preload() {
             loadImage('img/portraits/0129_2.png')
         ]
     ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0130.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0133.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0172.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0270.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0331.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0514.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0515.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0698 A.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/0698 B.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/2573.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/2611.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/2622.jpg')]
-    ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/3884.jpg')]
-    ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0130.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0133.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0172.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0270.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0331.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0514.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0515.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0698 A.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/0698 B.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/2573.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/2611.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/2622.jpg')]
+    // ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/3884.jpg')]
+    // ));
     portraitArray.push(new Portrait(
         [
             loadImage('img/portraits/BR1336.jpg'),
@@ -168,9 +168,9 @@ function preload() {
             loadImage('img/portraits/BR1336_2.png')
         ]
     ));
-    portraitArray.push(new Portrait(
-        [loadImage('img/portraits/BR2100.jpg')]
-    ));
+    // portraitArray.push(new Portrait(
+    //     [loadImage('img/portraits/BR2100.jpg')]
+    // ));
 }
 
 // p5 setup
@@ -184,15 +184,15 @@ function setup() {
     var row = 0;
     var col = 0;
     portraitArray.forEach(function(portrait, index) {
-        if (index % 8 === 0 && index > 0) {
+        if (index % 3 === 0 && index > 0) {
             row++;
             col = 0;
         }
         portrait.setPosition(
-            (width / 8) * col,
-            (height / 4) * row
+            (width / 3) * col,
+            (height / 2) * row
         );
-        portrait.resizeToFitImage(width / 8, height / 4);
+        portrait.resizeToFitImage(width / 3, height / 2);
         col++;
     });
 }
