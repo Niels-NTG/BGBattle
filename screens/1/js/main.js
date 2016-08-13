@@ -71,14 +71,11 @@ function draw() {
         })
     })
     peopleArray.forEach(function (person, index) {
-        ellipse(map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0), person.boundingrect.width * 32, person.boundingrect.height * 32);
-        text(index, map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0));
+        fill(0);
+        ellipse(map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y, 0, 1, height, 0), person.boundingrect.width * 32, person.boundingrect.height * 32);
+        text(index, map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y, 0, 1, height, 0));
     });
-    beginShape();
-    peopleArray.forEach(function (person) {
-        vertex(map(person.centroid.x, 0, 1, width, 0), map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0));
-    });
-    endShape(CLOSE);
+    
 }
 $(document).ready(function () {
     // SETUP TSPS Connection
@@ -109,7 +106,7 @@ function onPersonEntered(person) {
 
 function onPersonUpdated(person) {
     var xButton = Math.floor(map(person.centroid.x, 0, 1, width, 0) / buttonWidth);
-    var yButton = Math.floor(map(person.boundingrect.y + person.boundingrect.height, 0, 2, height, 0) / buttonHeight);
+    var yButton = Math.floor(map(person.boundingrect.y, 0, 1, height, 0) / buttonHeight);
     //    console.log(xButton, yButton);
     if (xButton < tickAmount && yButton < instrumentList.length) {
         buttons[yButton][xButton].hitBtn();
