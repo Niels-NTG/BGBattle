@@ -52,8 +52,8 @@ function Portrait(images, sound) {
     Portrait.prototype.resizeToFitImage = function(frameWidth, frameHeight) {
 	    this.images.forEach(function(image) {
 	        image.resize(frameWidth, 0);
-            this.y += (frameHeight - image.height);
 	    });
+	    this.y += (frameHeight - this.currentImage.height) / 2;
     }
 
     Portrait.prototype.setPosition = function(x, y) {
