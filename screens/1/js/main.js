@@ -40,7 +40,7 @@ var peopleArray = [];
 var socket = io('ws://192.168.1.124:4000');
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(1280, 720);
     textAlign(LEFT, BOTTOM);
     fill(255);
     stroke('#3c3');
