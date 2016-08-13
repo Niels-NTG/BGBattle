@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="socket.io.min.js"></script>
-</head>
-<body>
-<script>
-    var socket = io('ws://192.168.1.124:4000');
-    socket.on('application.message', function (peopleCount) {
-        console.log(peopleCount);
-        document.writeln('<span style="color: white">' + peopleCount + '</span>');
-    });
-</script>
-</body>
+	<html>
+		<head>
+			<title>TSPS - Moving p5 Example</title>
+			<meta charset="utf-8">
+			<script src="js/libs/jquery-1.7.1.min.js"></script>
+			<script src="js/libs/TSPS-1.2.js"></script>
+			<script src="js/libs/socket.io.min.js"></script>
+			<script src="js/libs/p5.min.js"></script>
+            <script src="js/libs/909.vendor.js"></script>
+            <script src="js/libs/909.scripts.js"></script>
+			<script src="js/main.js"></script>
+			<style type="text/css">
+				body {
+					margin: 0;
+					overflow: hidden;
+					background-color: black;
+				}
+			</style>
+		</head>
+	<body ng-app="9095App"></body>
 </html>
