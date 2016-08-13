@@ -2,6 +2,44 @@
 
 var TSPSConnection;
 
+
+//sequencer stuff
+var drumpreset,drumsetup,drumcomp;
+
+//initialising the sequencer, remeber this is async, so you'll want to wait before just calling 
+//things inside the sequencer
+var app = angular.module('9095App').directive('test', function(presetStorage, setup, sequencer){
+            return{
+                link:function(){
+                    //Hier alle logica indrukken
+                    setup.loadSounds().then(function(){
+                    drumsetup = setup;
+                    drumpreset =  presetStorage;   
+                    drumcomp = sequencer;
+});
+                }}
+                });
+
+        function testGlobal(){
+            for(var i =0;i<=15;i++){
+             
+                //Een functie voor elke tick (0-15 ticks, 4 maten)
+            $('body').scope().$on('tick_'+i, function(event, data){console.log(event)});
+            
+                }
+                        //We should prob create a function, i another file, that
+                        //sets the different patterns
+                        drumcomp.setSelectedInstrument('hand_clap');
+                        drumcomp.setStep(1,1);
+                        drumcomp.setStep(2,1);
+                        drumcomp.setStep(3,1);
+            
+//                        We should check if startPlay should be called again after each
+//                            change to the drumcomputer
+//                        console.log("tempo",drumcomp.getTempo());
+                        drumcomp.startPlay(true);
+        }
+
 var peopleArray = [];
 var socket = io('ws://192.168.1.124:4000');
 
