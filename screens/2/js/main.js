@@ -97,21 +97,18 @@ function preload() {
 		4,
 		'BOOM'
 	));
+	// portraitArray.push(new Portrait(
+	// 	[
+	// 		loadImage('img/Rembrandt_van_Rijn_199.jpg'),
+	// 		loadImage('img/Self-portrait_(1628-1629),_by_Rembrandt.jpg'),
+	// 		loadImage('img/Piet_Mondrian,_1908-10,_Evening;_Red_Tree_(Avond;_De_rode_boom),_oil_on_canvas,_70_x_99_cm,_Gemeentemuseum_Den_Haag.jpg')
+	// 	]
+	// ));
 	portraitArray.push(new Portrait(
 		[
-			loadImage('img/joined_BG.png')
+			loadImage('img/joined_without_BG.png')
 		]
 	));
-	// portraitArray.push(new Portrait(
-	// 	[
-	// 		loadImage('img/02_BG_2016_white.png')
-	// 	]
-	// ));
-	// portraitArray.push(new Portrait(
-	// 	[
-	// 		loadImage('img/02_BG_2016_white.png')
-	// 	]
-	// ));
 }
 
 // p5 setup
@@ -143,6 +140,9 @@ function setup() {
 		col++;
 	});
 
+
+	// portraitArray[portraitArray.length - 2].resizeToFitImage((width / 4) * 3, height / 2);
+	// portraitArray[portraitArray.length - 1].x =+ width / 4;
 	portraitArray[portraitArray.length - 1].resizeToFitImage((width / 4) * 3, height / 2);
 
 }
@@ -161,19 +161,13 @@ function draw() {
 		);
 	} else {
 	// Branding
-		// tint(frameCount % 360, 100, 100);
-		// image(
-		// 	portraitArray[portraitArray.length - 3].currentImage,
-		// 	portraitArray[portraitArray.length - 3].x,
-		// 	portraitArray[portraitArray.length - 3].y
-		// );
-		// // tint((frameCount - 100) % 360, 100, 100);
-		// image(
-		// 	portraitArray[portraitArray.length - 2].currentImage,
-		// 	portraitArray[portraitArray.length - 2].x,
-		// 	portraitArray[portraitArray.length - 2].y
-		// );
-		// tint((frameCount - 200) % 360, 100, 100);
+		noTint();
+		image(
+			portraitArray[portraitArray.length - 2].currentImage,
+			portraitArray[portraitArray.length - 2].x,
+			portraitArray[portraitArray.length - 2].y
+		);
+		tint((frameCount) % 360, 100, 100);
 		image(
 			portraitArray[portraitArray.length - 1].currentImage,
 			portraitArray[portraitArray.length - 1].x,
@@ -238,5 +232,6 @@ socket.on('application.message', function(receivedData) {
 		portraitArray[receivedData.index].isTriggered = true;
 		isAtractMode = false;
 		attractModeTimer = 0;
+		portraitArray[portraitArray.length - 2].playAnimation();
 	}
 });
