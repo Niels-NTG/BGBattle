@@ -79,7 +79,7 @@ function Button() {
         //FIXME: match animation speed to Tempo
         this.aniMationDuration = ((drumcomp.getTempo() / 60) / 4) * frameRate();
         if(this.play){
-            this.socket.emit('application.message', this.instrumentIndex);
+            this.socket.emit('application.message', {project:"techno portraits", index: this.instrumentIndex});
         }
     }
     Button.prototype.setColor = function (type, colorString) {
