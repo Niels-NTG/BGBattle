@@ -7,11 +7,11 @@ var peopleArray = [];
 //matrix sequence settings
 var instrumentList = [ "o_hi_hat", "hi_tom", "snare_drum",  "hand_clap", "bass_drum"];
 var instrumentAssets = {};
-instrumentAssets["o_hi_hat"] = {"colorOdd":"hsb(18, 100%, 80%)","colorEven":"hsb(18, 100%, 100%)","label":"TSS","iconPoints":[[80, 0, 40, 20, 40, 20, 0, 20]],"iconType":"bezier"};
-instrumentAssets["hi_tom"] = {"colorOdd":"hsb(130, 100%, 57%)","colorEven":"hsb(130, 100%, 77%)","label":"TOM","iconPoints":[[224,107,177,152,169,93,122,123]],"iconType":"bezier"};
-instrumentAssets["snare_drum"] = {"colorOdd":"hsb(0, 0%, 60%)","colorEven":"hsb(0, 0%, 80%)","label":"TAK","iconPoints":[[0,-13,0,-35],[-10,-10,-20,-30],[10,-10,20,-30]],"iconType":"lines"};
-instrumentAssets["hand_clap"] = {"colorOdd":"hsb(57, 81%, 65%)","colorEven":"hsb(57, 81%, 85%)","label":"CLAP","iconPoints":[[-5,-12,-20,-10],[-5,-17,-20,-23],[5,-12,20,-10],[5,-12,20,-23]],"iconType":"lines"};
-instrumentAssets["bass_drum"] = {"colorOdd":"hsb(184, 100%, 60%)","colorEven":"hsb(184, 100%, 80%)","label":"BOOM","iconPoints":[[-15,-10],[-20,-15],[-15,-15],[-15,-25],[-10,-15],[-5,-25],[10,-15],[17,-15],[15,-10]],"iconType":"shape"};
+instrumentAssets["o_hi_hat"] = {"colorOdd":"hsb(18, 100%, 80%)","colorEven":"hsb(18, 100%, 100%)","label":"TSS","iconWeight":4,"iconPoints":[[-20,20,0,30,0,30,20,20],[-25,30,0,40,0,40,25,30]],"iconType":"bezier"};
+instrumentAssets["hi_tom"] = {"colorOdd":"hsb(130, 100%, 57%)","colorEven":"hsb(130, 100%, 77%)","label":"TOM","iconWeight":5,"iconPoints":[[-26,-10,-26,-22,30,-2,30,-20]],"iconType":"bezier"};
+instrumentAssets["snare_drum"] = {"colorOdd":"hsb(0, 0%, 60%)","colorEven":"hsb(0, 0%, 80%)","label":"TAK","iconWeight":4,"iconPoints":[[0,-13,0,-35],[-10,-10,-20,-30],[10,-10,20,-30]],"iconType":"lines"};
+instrumentAssets["hand_clap"] = {"colorOdd":"hsb(57, 81%, 65%)","colorEven":"hsb(57, 81%, 85%)","label":"CLAP","iconWeight":4,"iconPoints":[[-5,-12,-20,-10],[-5,-17,-20,-23],[5,-12,20,-10],[5,-17,20,-23]],"iconType":"lines"};
+instrumentAssets["bass_drum"] = {"colorOdd":"hsb(184, 100%, 60%)","colorEven":"hsb(184, 100%, 80%)","label":"BOOM","iconWeight":5,"iconPoints":[[-15,-10],[-20,-15],[-15,-15],[-15,-25],[-5,-15],[5,-25],[5,-15],[14,-15],[12,-10]],"iconType":"shape"};
 
 var tickAmount = 8;
 var paddingAmount = 0.01; // padding in percentages
@@ -62,6 +62,8 @@ var app = angular.module('9095App').directive('test', function (presetStorage, s
                         buttons[i][t].text = instrumentPresets.label;
                         buttons[i][t].shapePoints = instrumentPresets.iconPoints;
                         buttons[i][t].iconType = instrumentPresets.iconType;
+                        buttons[i][t].iconWeight = instrumentPresets.iconWeight;
+                        
                     }
                 }
                 for (var i = 0; i <= 15; i++) {

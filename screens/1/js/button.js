@@ -23,7 +23,11 @@ function Button() {
     this.text;
     this.shapePoints;
     this.iconType;
+    this.iconWeight;
+    
     Button.prototype.paint = function () {
+        strokeWeight(Math.floor(this.width * 0.05));
+        stroke(this.playColor);
         if (this.play) {
             fill(this.playColor);
         }
@@ -31,10 +35,14 @@ function Button() {
             fill(this.stoppedColor);
         }
         rect(this.x, this.y, this.width, this.height, this.cornerradius);
+//        rect(this.x+(this.width * 0.5), this.y+(this.height * 0.1), this.width-(this.width * 0.05), this.height-(this.height * 0.05), this.cornerradius);
         noFill();
         stroke(this.stoppedColor);
         strokeWeight(Math.floor(this.width * 0.05));
         rect(this.x + (this.width * 0.1), this.y + (this.height * 0.1), this.width * 0.8, this.height * 0.8, this.cornerradius);
+        stroke(this.playColor);
+//        strokeWeight(Math.floor(this.width * 0.025));
+        rect(this.x + (this.width * 0.05), this.y + (this.height * 0.05), this.width * 0.9, this.height * 0.9, this.cornerradius);
         noStroke();
        
         
@@ -78,7 +86,7 @@ function Button() {
             fill(this.stoppedColor);
             textSize(25);
             stroke(this.stoppedColor);
-            strokeWeight(2);
+            strokeWeight(this.iconWeight);
             
             if(this.iconType =="lines"){
                 
@@ -87,15 +95,16 @@ function Button() {
                 })
             }else if(this.iconType =="shape"){
                 noFill();
+                stroke(this.stoppedColor);
                 beginShape();
                 this.shapePoints.forEach(function(linePoints,index){
-                    bezier(linePoints[0],linePoints[1], linePoints[2], linePoints[4]);
+                    vertex(linePoints[0],linePoints[1], linePoints[2], linePoints[4]);
                 });
                 endShape();
             } else if(this.iconType =="bezier"){
                 noFill();
-                fill(255);
-                strokeWeight(20);
+//                fill(255);
+//                strokeWeight(20);
                 this.shapePoints.forEach(function(linePoints,index){
                     bezier(linePoints[0], linePoints[1], linePoints[2], linePoints[3], linePoints[4], linePoints[5], linePoints[6], linePoints[7]);
                 });
