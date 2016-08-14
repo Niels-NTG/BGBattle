@@ -12,6 +12,14 @@ var buttons = [];
 var buttonWidth, buttonHeight, activeHeightArea;
 //initialising the sequencer, remeber this is async, so you'll want to wait before just calling
 //things inside the sequencer
+
+
+function setup() {
+    createCanvas(windowWidth, windowHeight);
+    myFont = loadFont('fonts/Raleway-ExtraBold.ttf');
+    
+}
+
 var app = angular.module('9095App').directive('test', function (presetStorage, setup, sequencer) {
     return {
         link: function () {
@@ -21,13 +29,16 @@ var app = angular.module('9095App').directive('test', function (presetStorage, s
                 drumpreset = presetStorage;
                 drumcomp = sequencer;
                 sequencer.startPlay(true);
-                
+                buttonWidth = width / tickAmount;
+                console.log(windowWidth, buttonWidth , width , tickAmount);
+                buttonHeight = height / instrumentList.length;
                 for (var i = 0; i < instrumentList.length; i++) {
                     buttons[i] = new Array();
                     for (var t = 0; t < tickAmount; t++) {
                         buttons[i][t] = new Button();
                         buttons[i][t].instrumentIndex = i;
                         buttons[i][t].tickIndex = t;
+                        console.log(width,height);
                         buttons[i][t].x = (width * 0.005) + (buttonWidth * t);
                         buttons[i][t].y = (height * 0.005) + (buttonHeight * i);
                         buttons[i][t].width = buttonWidth - (paddingAmount * width);
@@ -60,11 +71,7 @@ var app = angular.module('9095App').directive('test', function (presetStorage, s
     }
 });
 
-function setup() {
-    createCanvas(windowWidth, windowHeight);
-    buttonWidth = width / tickAmount;
-    buttonHeight = height / instrumentList.length;
-}
+
 
 function draw() {
     clear();

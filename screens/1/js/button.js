@@ -68,9 +68,8 @@ function Button() {
         } 
         //If the hit function isn't triggered before the next paint, we remove the hit
         fill(0);
-        textSize(72);
-        textFont("aaux-next");
-        textStyle(BOLD);
+        textSize(20);
+        textFont(myFont);
         text("GSROOV", this.x, this.y+(this.height/2));
          
     }

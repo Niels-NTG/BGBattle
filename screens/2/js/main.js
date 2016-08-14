@@ -107,7 +107,7 @@ function preload() {
 // p5 setup
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-
+    myFont = loadFont('fonts/Raleway-ExtraBold.ttf');
 	colorMode(HSB);
 	// frameRate(30);
 
