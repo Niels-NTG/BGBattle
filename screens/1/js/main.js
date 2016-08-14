@@ -9,9 +9,9 @@ var instrumentList = [ "o_hi_hat", "hi_tom", "snare_drum",  "hand_clap", "bass_d
 var instrumentAssets = {};
 instrumentAssets["o_hi_hat"] = {"colorOdd":"hsb(18, 100%, 80%)","colorEven":"hsb(18, 100%, 100%)","label":"TSS","iconPoints":[],"iconType":"curve"};
 instrumentAssets["hi_tom"] = {"colorOdd":"hsb(130, 100%, 57%)","colorEven":"hsb(130, 100%, 77%)","label":"TOM","iconPoints":[],"iconType":"shape"};
-instrumentAssets["snare_drum"] = {"colorOdd":"hsb(0, 0%, 60%)","colorEven":"hsb(0, 0%, 80%)","label":"TAK","iconPoints":[[0,10,0,40],[-10,10,-20,30],[10,10,20,30]],"iconType":"lines"};
+instrumentAssets["snare_drum"] = {"colorOdd":"hsb(0, 0%, 60%)","colorEven":"hsb(0, 0%, 80%)","label":"TAK","iconPoints":[[0,-13,0,-35],[-10,-10,-20,-30],[10,-10,20,-30]],"iconType":"lines"};
 instrumentAssets["hand_clap"] = {"colorOdd":"hsb(57, 81%, 65%)","colorEven":"hsb(57, 81%, 85%)","label":"CLAP","iconPoints":[],"iconType":"shape"};
-instrumentAssets["bass_drum"] = {"colorOdd":"hsb(184, 100%, 60%)","colorEven":"hsb(184, 100%, 80%)","label":"BOOM","iconPoints":[],"iconType":"shape"};
+instrumentAssets["bass_drum"] = {"colorOdd":"hsb(184, 100%, 60%)","colorEven":"hsb(184, 100%, 80%)","label":"BOOM","iconPoints":[[-15,-10],[-20,-15],[-15,-15],[-15,-25],[-10,-15],[-5,-25],[10,-15],[17,-15],[15,-10]],"iconType":"shape"};
 
 var tickAmount = 8;
 var paddingAmount = 0.01; // padding in percentages

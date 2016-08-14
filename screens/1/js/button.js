@@ -77,7 +77,25 @@ function Button() {
         else {
             fill(this.stoppedColor);
             textSize(25);
+            stroke(this.stoppedColor);
+            strokeWeight(2);
+            
+            if(this.iconType =="lines"){
+                
+                this.shapePoints.forEach(function(linePoints,index){
+                    line(linePoints[0],linePoints[1],linePoints[2],linePoints[3]);
+                })
+            }else if(this.iconType =="shape"){
+                noFill();
+                beginShape();
+                this.shapePoints.forEach(function(linePoints,index){
+                    vertex(linePoints[0],linePoints[1]);
+                });
+                endShape();
+            }
+            fill(this.stoppedColor);
         }
+        noStroke();
         textFont(myFont);
         text(this.text, 0, 0);
         pop();
