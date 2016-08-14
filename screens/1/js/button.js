@@ -89,9 +89,16 @@ function Button() {
                 noFill();
                 beginShape();
                 this.shapePoints.forEach(function(linePoints,index){
-                    vertex(linePoints[0],linePoints[1]);
+                    bezier(linePoints[0],linePoints[1], linePoints[2], linePoints[4]);
                 });
                 endShape();
+            } else if(this.iconType =="bezier"){
+                noFill();
+                fill(255);
+                strokeWeight(20);
+                this.shapePoints.forEach(function(linePoints,index){
+                    bezier(linePoints[0], linePoints[1], linePoints[2], linePoints[3], linePoints[4], linePoints[5], linePoints[6], linePoints[7]);
+                });
             }
             fill(this.stoppedColor);
         }
