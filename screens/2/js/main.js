@@ -99,19 +99,19 @@ function preload() {
 	));
 	portraitArray.push(new Portrait(
 		[
-			loadImage('img/02_BG_2016_white.png')
+			loadImage('img/joined_BG.png')
 		]
 	));
-	portraitArray.push(new Portrait(
-		[
-			loadImage('img/02_BG_2016_white.png')
-		]
-	));
-	portraitArray.push(new Portrait(
-		[
-			loadImage('img/02_BG_2016_white.png')
-		]
-	));
+	// portraitArray.push(new Portrait(
+	// 	[
+	// 		loadImage('img/02_BG_2016_white.png')
+	// 	]
+	// ));
+	// portraitArray.push(new Portrait(
+	// 	[
+	// 		loadImage('img/02_BG_2016_white.png')
+	// 	]
+	// ));
 }
 
 // p5 setup
@@ -137,9 +137,14 @@ function setup() {
 			(width / 4) * col,
 			(height / 2) * row
 		);
-		portrait.resizeToFitImage(width / 4, height / 2);
+		if (portrait.instrumentName) {
+			portrait.resizeToFitImage(width / 4, height / 2);
+		}
 		col++;
 	});
+
+	portraitArray[portraitArray.length - 1].resizeToFitImage((width / 4) * 3, height / 2);
+
 }
 
 // p5 draw
@@ -156,19 +161,19 @@ function draw() {
 		);
 	} else {
 	// Branding
-		tint(frameCount % 360, 100, 100);
-		image(
-			portraitArray[portraitArray.length - 3].currentImage,
-			portraitArray[portraitArray.length - 3].x,
-			portraitArray[portraitArray.length - 3].y
-		);
-		tint((frameCount - 100) % 360, 100, 100);
-		image(
-			portraitArray[portraitArray.length - 2].currentImage,
-			portraitArray[portraitArray.length - 2].x,
-			portraitArray[portraitArray.length - 2].y
-		);
-		tint((frameCount - 200) % 360, 100, 100);
+		// tint(frameCount % 360, 100, 100);
+		// image(
+		// 	portraitArray[portraitArray.length - 3].currentImage,
+		// 	portraitArray[portraitArray.length - 3].x,
+		// 	portraitArray[portraitArray.length - 3].y
+		// );
+		// // tint((frameCount - 100) % 360, 100, 100);
+		// image(
+		// 	portraitArray[portraitArray.length - 2].currentImage,
+		// 	portraitArray[portraitArray.length - 2].x,
+		// 	portraitArray[portraitArray.length - 2].y
+		// );
+		// tint((frameCount - 200) % 360, 100, 100);
 		image(
 			portraitArray[portraitArray.length - 1].currentImage,
 			portraitArray[portraitArray.length - 1].x,
@@ -186,10 +191,6 @@ function draw() {
 			image(portrait.currentImage, portrait.x, portrait.y);
 		}
 	});
-
-	stroke(200, 100, 100);
-	noFill();
-	bezier(-20, 20, 0, 25, 0, 25, 20, 20);
 
 	if (attractModeTimer > 1000 && !isAtractMode) {
 		attractModeTimer = 0;
