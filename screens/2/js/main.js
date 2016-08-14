@@ -80,21 +80,6 @@ function preload() {
 			loadImage('img/portraits/0019_2.png')
 		]
 	));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0024.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0109.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0110.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0115.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0116.jpg')]
-	// ));
 	portraitArray.push(new Portrait(
 		[
 			loadImage('img/portraits/0129.jpg'),
@@ -102,49 +87,6 @@ function preload() {
 			loadImage('img/portraits/0129_2.png')
 		]
 	));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0130.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0133.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0172.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0270.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0331.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0514.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0515.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0698 A.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/0698 B.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/2573.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/2611.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/2622.jpg')]
-	// ));
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/3884.jpg')]
-	// ));
-
-	// portraitArray.push(new Portrait(
-	//     [loadImage('img/portraits/BR2100.jpg')]
-	// ));
 	portraitArray.push(new Portrait(
 		[
 			loadImage('img/02_BG_2016_white.png')
