@@ -1,18 +1,21 @@
 // setup global vars
 var TSPSConnection;
 
-var socket = io('ws://192.168.1.124:4000');
+// var socket = io('ws://192.168.1.124:4000');
+var socket = io('ws://192.168.1.162:3000');
 
 var portraitArray = [];
 
 var isPaused = false;
 
-var isAtractMode = true;
+var isAtractMode = false;
+var attractModeTimer = 0;
 
-function Portrait(images, animationDelay) {
+function Portrait(images, animationDelay, instrumentName) {
 	this.images = images;
 	this.currentImage = this.images[0];
 	this.animationDelay = animationDelay || 2;
+	this.instrumentName = instrumentName;
 	this.x = 0;
 	this.y = 0;
 	this.isTriggered = false;
@@ -52,40 +55,47 @@ function Portrait(images, animationDelay) {
 function preload() {
 	portraitArray.push(new Portrait(
 		[
-			// loadImage('img/portraits/0025.png'),
-			loadImage('img/portraits/0025_1.png'),
-			loadImage('img/portraits/0025_2.png')
-		],
-		12
-	));
-	portraitArray.push(new Portrait(
-		[
-			loadImage('img/portraits/BR1336.jpg'),
+			loadImage('img/portraits/BR1336.png'),
 			loadImage('img/portraits/BR1336_1.png'),
 			loadImage('img/portraits/BR1336_2.png')
 		],
-		4
+		4,
+		'TSS'
 	));
 	portraitArray.push(new Portrait(
 		[
 			loadImage('img/portraits/0114.png'),
-			loadImage('img/portraits/0114_1.png'),
-			loadImage('img/portraits/0114_2.png')
-		]
+			loadImage('img/portraits/0114_1.png')
+			// loadImage('img/portraits/0114_2.png')
+		],
+		4,
+		'TOM'
 	));
 	portraitArray.push(new Portrait(
 		[
-			loadImage('img/portraits/0019.jpg'),
+			loadImage('img/portraits/0019.png'),
 			loadImage('img/portraits/0019_1.png'),
 			loadImage('img/portraits/0019_2.png')
-		]
+		],
+		3,
+		'TAK'
 	));
 	portraitArray.push(new Portrait(
 		[
-			loadImage('img/portraits/0129.jpg'),
-			loadImage('img/portraits/0129_1.png'),
-			loadImage('img/portraits/0129_2.png')
-		]
+			loadImage('img/portraits/clap.png'),
+			loadImage('img/portraits/clap_1.png')
+		],
+		4,
+		'CLAP'
+	));
+	portraitArray.push(new Portrait(
+		[
+			// loadImage('img/portraits/0025.png'),
+			loadImage('img/portraits/0025_1.png'),
+			loadImage('img/portraits/0025_2.png')
+		],
+		4,
+		'BOOM'
 	));
 	portraitArray.push(new Portrait(
 		[
@@ -108,8 +118,11 @@ function preload() {
 function setup() {
 	createCanvas(windowWidth, windowHeight);
     myFont = loadFont('fonts/Raleway-ExtraBold.ttf');
+    textSize(222);
+    textAlign(LEFT, CENTER);
 	colorMode(HSB);
-	// frameRate(30);
+	noStroke();
+	frameRate(30);
 
 	background(0);
 
@@ -132,40 +145,58 @@ function setup() {
 // p5 draw
 function draw() {
 	background(0);
-	noTint();
+	textFont(myFont);
+
+	if (isAtractMode) {
+		fill(frameCount % 360, 100, 100);
+		text(
+			'BASIC GROOVES  ⁄  TECHNO PORTRAITS',
+			width + (-frameCount % width) * 4,
+			portraitArray[portraitArray.length - 3].y + (portraitArray[portraitArray.length - 3].currentImage.height / 2)
+		);
+	} else {
+	// Branding
+		tint(frameCount % 360, 100, 100);
+		image(
+			portraitArray[portraitArray.length - 3].currentImage,
+			portraitArray[portraitArray.length - 3].x,
+			portraitArray[portraitArray.length - 3].y
+		);
+		tint((frameCount - 100) % 360, 100, 100);
+		image(
+			portraitArray[portraitArray.length - 2].currentImage,
+			portraitArray[portraitArray.length - 2].x,
+			portraitArray[portraitArray.length - 2].y
+		);
+		tint((frameCount - 200) % 360, 100, 100);
+		image(
+			portraitArray[portraitArray.length - 1].currentImage,
+			portraitArray[portraitArray.length - 1].x,
+			portraitArray[portraitArray.length - 1].y
+		);
+	}
 
 	// Portraits
+	noTint();
 	portraitArray.forEach(function(portrait) {
-		if (portrait.isTriggered) {
-			portrait.playAnimation();
+		if (portrait.instrumentName) {
+			if (portrait.isTriggered) {
+				portrait.playAnimation();
+			}
+			image(portrait.currentImage, portrait.x, portrait.y);
 		}
-		image(portrait.currentImage, portrait.x, portrait.y);
 	});
 
-	// Branding
-	tint(frameCount % 360, 100, 100);
-	image(
-		portraitArray[portraitArray.length - 3].currentImage,
-		portraitArray[portraitArray.length - 3].x,
-		portraitArray[portraitArray.length - 3].y
-	);
-	tint((frameCount - 100) % 360, 100, 100);
-	image(
-		portraitArray[portraitArray.length - 2].currentImage,
-		portraitArray[portraitArray.length - 2].x,
-		portraitArray[portraitArray.length - 2].y
-	);
-	tint((frameCount - 200) % 360, 100, 100);
-	image(
-		portraitArray[portraitArray.length - 1].currentImage,
-		portraitArray[portraitArray.length - 1].x,
-		portraitArray[portraitArray.length - 1].y
-	);
+	stroke(200, 100, 100);
+	noFill();
+	bezier(-20, 20, 0, 25, 0, 25, 20, 20);
 
-	// Attract mode
-	// if (isAtractMode) {
-	// 	background(0);
-	// }
+	if (attractModeTimer > 1000 && !isAtractMode) {
+		attractModeTimer = 0;
+		isAtractMode = true;
+	} else {
+		attractModeTimer++;
+	}
 
 }
 
@@ -177,6 +208,9 @@ function keyPressed() {
 		noLoop();
 	} else {
 		loop();
+	}
+	if (key === 'a' || key === 'A') {
+		isAtractMode = !isAtractMode;
 	}
 }
 
@@ -197,7 +231,11 @@ $(document).ready(function () {
 	// TSPSConnection.onPersonLeft = onPersonLeave;
 });
 
-socket.on('application.message', function(instrumentIndex) {
-	// console.log(instrumentIndex);
-	portraitArray[instrumentIndex].playAnimation();
+socket.on('application.message', function(receivedData) {
+	if (receivedData.project !== undefined && receivedData.project === 'techno portraits') {
+		console.log(portraitArray[receivedData.index].instrumentName);
+		portraitArray[receivedData.index].isTriggered = true;
+		isAtractMode = false;
+		attractModeTimer = 0;
+	}
 });
