@@ -13,16 +13,20 @@ function Button() {
     this.aniMationDuration = 20;
     this.direction = 0; // why not just a boolean?
     this.play = false;
-    this.playColor = color("#d9534f");
-    this.stoppedColor = color("#dddddd");
+    this.playColor;
+    this.stoppedColor;
     this.hit = false;
     this.hitTimer = 0;
     this.hitBuffer = 100;
     this.socket;
     this.drumcomp;
     
+    
+    
     Button.prototype.paint = function () {
         //Light up effect
+        
+        
         if (this.direction !== 0) {
             this.aniMationTimer++;
             var lerpValue = this.aniMationTimer / this.aniMationDuration;
@@ -63,6 +67,11 @@ function Button() {
             }
         } 
         //If the hit function isn't triggered before the next paint, we remove the hit
+        fill(0);
+        textSize(72);
+        textFont("aaux-next");
+        textStyle(BOLD);
+        text("GSROOV", this.x, this.y+(this.height/2));
          
     }
     Button.prototype.tick = function () {
@@ -73,6 +82,30 @@ function Button() {
         if(this.play){
             this.socket.emit('application.message', this.instrumentIndex);
         }
+    }
+    Button.prototype.setColor = function (type, colorString) {
+        switch (type) {
+        case "highlightcolor":
+            this.highlightcolor = color(colorString);
+            break;
+        case "lowcolor":
+            this.lowcolor = color(colorString);
+            break;
+        case "playColor":
+            this.playColor = color(colorString);
+            break;
+        case "stoppedColor":
+            this.stoppedColor = color(colorString);
+            break;
+        case "playColor":
+            this.playColor = color(colorString);
+            break;
+        case "stoppedColor":
+            this.stoppedColor = color(colorString);
+            break;
+        }
+        
+        
     }
 //    Button.prototype.toggle = function (state) {
 //        this.play = state;

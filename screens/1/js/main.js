@@ -21,8 +21,7 @@ var app = angular.module('9095App').directive('test', function (presetStorage, s
                 drumpreset = presetStorage;
                 drumcomp = sequencer;
                 sequencer.startPlay(true);
-                buttonWidth = width / tickAmount;
-                buttonHeight = height / instrumentList.length;
+                
                 for (var i = 0; i < instrumentList.length; i++) {
                     buttons[i] = new Array();
                     for (var t = 0; t < tickAmount; t++) {
@@ -33,8 +32,10 @@ var app = angular.module('9095App').directive('test', function (presetStorage, s
                         buttons[i][t].y = (height * 0.005) + (buttonHeight * i);
                         buttons[i][t].width = buttonWidth - (paddingAmount * width);
                         buttons[i][t].height = buttonHeight - (paddingAmount * height);
-                        buttons[i][t].highlightcolor = ((t % 2 == 0) ? color("#f6f7d0") : color("#f2f2eb"));
-                        buttons[i][t].lowcolor = ((t % 2 == 0) ? color("#999") : color("#666"));
+                        buttons[i][t].setColor("highlightcolor",((t % 2 == 0) ? "#f6f7d0" : "#f2f2eb"));
+                        buttons[i][t].setColor("lowcolor",((t % 2 == 0) ? "#999999" : "#666666"));
+                        buttons[i][t].setColor("playColor", "#d9534f");
+                        buttons[i][t].setColor("stoppedColor","#dddddd");
                         buttons[i][t].socket = socket;
                         buttons[i][t].drumpcomp = drumcomp;
                     }
@@ -61,6 +62,8 @@ var app = angular.module('9095App').directive('test', function (presetStorage, s
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    buttonWidth = width / tickAmount;
+    buttonHeight = height / instrumentList.length;
 }
 
 function draw() {
@@ -93,7 +96,7 @@ $(document).ready(function () {
 
 function updateCanvas(person) {
     // console.log(person);
-    getVertexLength();
+    
 }
 
 function onPersonEntered(person) {
@@ -122,15 +125,5 @@ function onPersonLeave(person) {
     peopleArray = peopleArray.filter(function (obj) {
         return obj.id !== person.id;
     });
-    //    console.log(peopleArray.length);
-    
-}
-
-function getVertexLength() {
-    var vertexLength = 0;
-    for (var i = 0; i < peopleArray.length - 1; i++) {
-        vertexLength += dist(peopleArray[i].centroid.x, peopleArray[i].boundingrect.y + peopleArray[i].boundingrect.height, peopleArray[i + 1].centroid.x, peopleArray[i + 1].boundingrect.y + peopleArray[i + 1].boundingrect.height);
-    }
-    //    console.log(vertexLength);
-    return vertexLength;
+    //    console.log(peopleArray.length);   
 }
