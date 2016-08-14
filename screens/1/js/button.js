@@ -26,8 +26,8 @@ function Button() {
     this.iconWeight;
     
     Button.prototype.paint = function () {
-        strokeWeight(Math.floor(this.width * 0.05));
-        stroke(this.playColor);
+        this.highlightcolor = color(hue(this.playColor),40,100);
+        noStroke();
         if (this.play) {
             fill(this.playColor);
         }
@@ -39,10 +39,11 @@ function Button() {
         noFill();
         stroke(this.stoppedColor);
         strokeWeight(Math.floor(this.width * 0.05));
+//        rect(this.x + (this.width * 0.1), this.y + (this.height * 0.1), this.width * 0.8, this.height * 0.8, this.cornerradius);
         rect(this.x + (this.width * 0.1), this.y + (this.height * 0.1), this.width * 0.8, this.height * 0.8, this.cornerradius);
         stroke(this.playColor);
 //        strokeWeight(Math.floor(this.width * 0.025));
-        rect(this.x + (this.width * 0.05), this.y + (this.height * 0.05), this.width * 0.9, this.height * 0.9, this.cornerradius);
+        rect(this.x + (this.width * 0.025), this.y + (this.height * 0.025), this.width * 0.95, this.height * 0.95, this.cornerradius);
         noStroke();
        
         
