@@ -1,7 +1,7 @@
 // setup global vars
 var TSPSConnection;
-//var socket = io('ws://192.168.1.124:4000');
-var socket = io('ws://192.168.1.162:3000');
+var socket = io('ws://192.168.1.124:4000');
+//var socket = io('ws://192.168.1.162:3000');
 var peopleArray = [];
 //sequencer stuff
 //matrix sequence settings
